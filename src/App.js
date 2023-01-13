@@ -1,5 +1,3 @@
-
-import './App.css';
 import './Components/Sidebar/Sidebar.css'
 import Sidebar from './Components/Sidebar/Sidebar.js'
 import {
