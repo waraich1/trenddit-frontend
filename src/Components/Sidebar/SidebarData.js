@@ -9,7 +9,7 @@ import * as BiLogos from  'react-icons/bi';
 export const SidebarData = [
     {
         title: "Subreddit",
-        path: "/",
+        path: "/subreddit",
         icons: <IoLogos.IoLogoReddit />,
         cName: "side-text"
     },
