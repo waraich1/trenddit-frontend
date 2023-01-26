@@ -8,6 +8,7 @@ import dropDownMenu from "../../Components/DropdownMenu/DropdownMenu"
 
 function Trends() {
     const dataSubreddit = [];
+    const currentlySelectedTrend = "";
     const dataTrend = [];
     const [trendWords, setTrendWords] = useState([]);
     const [subredditNames, setSubredditNames] = useState([]);
@@ -31,7 +32,14 @@ function Trends() {
         setSubreddit("")
     };
     
-    const handleClick = async (event) => {
+    const handleClickForTrends = async (event) => {
+        console.log("HERE IS THE TRENDS MENU SELECTION")
+        console.log(trendsMenu)
+    event.preventDefault();
+    dispatch(getTrendsData());
+  };
+
+  const handleClickForSubreddits = async (event) => {
     event.preventDefault();
     dispatch(getTrendsData());
   };
@@ -86,6 +94,9 @@ function Trends() {
     Graphs[0] = <p>This Failed</p>;
   }
 
+  const trendsMenu = dropDownMenu(trendWords, "Trends")
+
+
   return (
     <>
     <div>
@@ -118,10 +129,16 @@ function Trends() {
       </form>
 
       <div>
-      {dropDownMenu(trendWords, "Trends")}
+      <form onSubmit={handleClickForTrends}>  
+      {trendsMenu}
+      <input type="submit" />
+      </form>
+      <form onSubmit={handleClickForSubreddits}>  
       {dropDownMenu(subredditNames, "Subreddits")}
+      <input type="submit" />
+      </form>
     </div>
-<div>
+    <div>
       {Graphs[0]}
       </div>
 

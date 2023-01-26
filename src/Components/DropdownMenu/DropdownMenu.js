@@ -1,22 +1,24 @@
 import { Dropdown } from 'semantic-ui-react'
-import React from 'react';
+import React, { useState } from "react";
 import 'semantic-ui-css/semantic.min.css';
 
 
 
-function dropDownMenu(input, title) {
-    return (
-      <>
-      <Dropdown text={title}>
-    <Dropdown.Menu>
-    {input.map( (word, index) => ( <Dropdown.Item key= {index}text={`${word}`}/>))}
-    </Dropdown.Menu>
-  </Dropdown>
+function DropDownMenu(input, title) {
+
     
-      </>
+    var [currentValue, setCurrentValue] = useState("");
+    var options = [];
+
+    input.map((item) => options.push({key: item, value: item, text: item}))
+
+
+    return ( <Dropdown placeholder={title} selection options={options} value = {currentValue} onChange={setCurrentValue}/>
     );
   }
 
-export default dropDownMenu;
+
+
+export default DropDownMenu;
 
 
