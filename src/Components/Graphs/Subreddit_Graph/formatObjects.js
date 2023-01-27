@@ -17,9 +17,9 @@ const formatData = (data, dataKey, dataValue) => {
         obj[dataValue] = value
         if (dataKey === "author") {
             obj['label'] = key
-            if (key.length > 10) {
+            if (key.length > 8) {
                 console.log(key.length)
-                obj['label'] = key.slice(0,8) + ".."
+                obj['label'] = key.slice(0,6) + ".."
             }
         }
         result.push(obj)
