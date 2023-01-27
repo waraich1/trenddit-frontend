@@ -12,7 +12,6 @@ import {
 
 
 const SubredditBarGraph = (props) => (
-
   <ResponsiveContainer width="100%" height={500}>
     <BarChart data={props.data}>
       <XAxis
@@ -26,7 +25,7 @@ const SubredditBarGraph = (props) => (
       </YAxis>
 
       <Tooltip />
-      <Bar dataKey="comments" fill="#8884d8">
+      <Bar dataKey={props.dataKey} fill="#8884d8">
         <LabelList dataKey="label" position="bottom" angle="0" offset={10} fill="black" />
       </Bar>
     </BarChart>
