@@ -7,28 +7,31 @@ import {
   YAxis,
   Bar,
   LabelList,
+  Label
 } from "recharts";
 
+
 const SubredditBarGraph = (props) => (
-  <ResponsiveContainer width="80%" height={600}>
+
+  <ResponsiveContainer width="100%" height={500}>
     <BarChart data={props.data}>
       <XAxis
+      height={50}
+      dataKey="author"
         tick={false}
-        label={{ value: "Author", position: "insideBottom", offset: "-5" }}
+        label={{ value: "Author", position: "insideBottom", offset: "0" }}
       />
-      <YAxis
-        label={{
-          value: "Number of comments",
-          angle: -90,
-          position: "Left",
-        }}
-      />
+      <YAxis width={100}>
+        <Label angle={270} value={props.yLabel} />
+      </YAxis>
+
       <Tooltip />
       <Bar dataKey="comments" fill="#8884d8">
-        <LabelList dataKey="author" position="center" angle="90" fill="black" />
+        <LabelList dataKey="label" position="bottom" angle="0" offset={10} fill="black" />
       </Bar>
     </BarChart>
   </ResponsiveContainer>
 );
 
-export default SubredditBarGraph;
+
+export {SubredditBarGraph};
