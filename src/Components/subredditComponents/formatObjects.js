@@ -18,13 +18,14 @@ const formatData = (data, dataKey, dataValue) => {
         if (dataKey === "author") {
             obj['label'] = key
             if (key.length > 8) {
-                console.log(key.length)
                 obj['label'] = key.slice(0,6) + ".."
             }
         }
         result.push(obj)
     }
-    result.sort((a,b) => b.comments - a.comments)
+    result.sort((a,b) => {
+        return b[dataValue] - a[dataValue]})
+    console.log(result)
     return result
 }
 
