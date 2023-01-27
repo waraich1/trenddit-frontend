@@ -6,6 +6,7 @@ import Subreddit from "./Pages/Subreddit/Subreddit";
 import Trends from "./Pages/Trends/Trends";
 import User from "./Pages/User/User";
 import Home from "./Pages/Home/Home";
+import 'semantic-ui-css/semantic.min.css'
 
 const App = () => {
   const mainAppWrapper = (Component) => (
