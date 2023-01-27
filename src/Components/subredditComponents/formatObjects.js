@@ -25,7 +25,6 @@ const formatData = (data, dataKey, dataValue) => {
     }
     result.sort((a,b) => {
         return b[dataValue] - a[dataValue]})
-    console.log(result)
     return result
 }
 
