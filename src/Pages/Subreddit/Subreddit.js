@@ -39,11 +39,11 @@ function Subreddit() {
   let loader = <Loader active={loaderActive} size="big"/>
 
   // Initialize graphs
-  let Graph = <Loader active={loaderActive}/>
-  let Graph1 = <Loader active={loaderActive}/>;
-  let Graph2 = <Loader active={loaderActive}/>;
-  let Graph3 = <Loader active={loaderActive}/>;
-  let Graph4 = <Loader active={loaderActive}/>;
+  let commFreqGraph = <Loader active={loaderActive}/>
+  let commScoreGraph = <Loader active={loaderActive}/>;
+  let commWordCloud = <Loader active={loaderActive}/>;
+  let postFreqGraph = <Loader active={loaderActive}/>;
+  let postScoreGraph = <Loader active={loaderActive}/>;
 
   // Check subreddit data status 
   if (subredditD.data.CommentData.status === "loading" ||
@@ -61,20 +61,20 @@ function Subreddit() {
     postScoreData = formatData(PostData.author_score, "author", "score")
     commWordTrendData = formatData(commentData.text, "text", "value")
 
-    Graph = <SubredditBarGraph data={commFreqData} yLabel={"Number of Comments"} dataKey="comments"/>;
-    Graph1 = <SubredditBarGraph data={commScoreData} yLabel={"Total comment score"} dataKey="score"/>;
-    Graph2 = <SimpleWordcloud words={commWordTrendData}/>;
-    Graph3 = <SubredditBarGraph data={postFreqData} yLabel={"Number of Posts"} dataKey="posts"/>;
-    Graph4 = <SubredditBarGraph data={postScoreData} yLabel={"Total post score"} dataKey="score"/>;
+    commFreqGraph = <SubredditBarGraph data={commFreqData} yLabel={"Number of Comments"} dataKey="comments"/>;
+    commScoreGraph = <SubredditBarGraph data={commScoreData} yLabel={"Total comment score"} dataKey="score"/>;
+    commWordCloud = <SimpleWordcloud words={commWordTrendData}/>;
+    postFreqGraph = <SubredditBarGraph data={postFreqData} yLabel={"Number of Posts"} dataKey="posts"/>;
+    postScoreGraph = <SubredditBarGraph data={postScoreData} yLabel={"Total post score"} dataKey="score"/>;
     loader = null;
   }
   if (subredditD.data.CommentData.status === "failed" ||
     subredditD.data.PostData.status === "failed") {
-    Graph = <p>This Failed</p>;
-    Graph1 = <p>This Failed</p>;
-    Graph2 = <p>This Failed</p>;
-    Graph3 = <p>This Failed</p>;
-    Graph4 = <p>This Failed</p>;
+      commFreqGraph = <p>This Failed</p>;
+    commScoreGraph = <p>This Failed</p>;
+    commWordCloud = <p>This Failed</p>;
+    postFreqGraph = <p>This Failed</p>;
+    postScoreGraph = <p>This Failed</p>;
     loader = null;
   }
 
@@ -113,7 +113,7 @@ function Subreddit() {
             <Card fluid>
               <Card.Content>
                 <Card.Header content="Comment Frequency By Author" textAlign="center"></Card.Header>
-                {Graph}
+                {commFreqGraph}
               </Card.Content>
             </Card>
         </Grid.Row>
@@ -121,7 +121,7 @@ function Subreddit() {
           <Card fluid>
             <Card.Content>
               <Card.Header content="Comment Score By Author" textAlign="center"></Card.Header>
-              {Graph1}
+              {commScoreGraph}
             </Card.Content>
           </Card>
         </Grid.Row>
@@ -129,7 +129,7 @@ function Subreddit() {
           <Card fluid>
             <Card.Content>
               <Card.Header content="Subreddit Word Frequency" textAlign="center"></Card.Header>
-              <div style={{"padding-top":"1em"}}>{Graph2}</div>
+              <div style={{"padding-top":"1em"}}>{commWordCloud}</div>
             </Card.Content>
           </Card>
         </Grid.Row>
@@ -137,7 +137,7 @@ function Subreddit() {
           <Card fluid>
             <Card.Content>
               <Card.Header content="Post Frequency By Author" textAlign="center"></Card.Header>
-              {Graph3}
+              {postFreqGraph}
             </Card.Content>
           </Card>
         </Grid.Row>
@@ -145,7 +145,7 @@ function Subreddit() {
           <Card fluid>
             <Card.Content>
               <Card.Header content="Post Score By Author" textAlign="center"></Card.Header>
-              {Graph4}
+              {postScoreGraph}
             </Card.Content>
           </Card>
         </Grid.Row>
