@@ -6,6 +6,8 @@ import {
   addTrendDropdown,
   resetEverything,
 } from "./TrendsSlice";
+import { Container, Button, Select, Input, Grid, Card, Dimmer, Loader } from 'semantic-ui-react'
+
 import FrequencyOfTrendInAllSubredditsLineGraph from "../../Components/Graphs/TrendsGraph/FrequencyOfTrendInAllSubredditsLineGraph";
 import FrequencyOfAllTrendsInSingleSubredditsLineGraph from "../../Components/Graphs/TrendsGraph/FrequencyOfAllTrendsInSingleSubredditsLineGraph";
 import FrequencyOfSingleTrendInSingleSubredditsLineGraph from "../../Components/Graphs/TrendsGraph/FrequencyOfSingleTrendInSingleSubredditsLineGraph";
@@ -119,7 +121,7 @@ function Trends() {
     [null],
     [null],
     [null],
-    
+
   ];
 
   if (trends.status === "loading") {
@@ -321,49 +323,60 @@ function Trends() {
 
   return (
     <>
-      <div>
-        <form onSubmit={onUpdateTrendWords}>
-          <label>
-            Enter trends:
-            <input
-              type="text"
-              id="trendsInput"
-              value={trendKeyword}
-              onChange={(e) => {
+    <Container>
+    <Grid textAlign="center" columns={2} divided padded='vertically'>
+
+      <Grid.Row>
+      <Grid.Column stretched>
+      <Input id="trendsInput" type='text' value= {trendKeyword} placeholder='Enter Trends' action={{onClick:onUpdateTrendWords, icon: "add"}} onChange={(e) => {
                 setTrendKeyword(e.target.value);
-              }}
-            />
-          </label>
-          <input type="submit" id="trendsSubmit" />
-        </form>
+              }}>
+            </Input>
+        </Grid.Column>
+        <Grid.Column stretched>
+        <Input id="subredditInput"type='text' value= {subreddit} placeholder='Enter Subreddit' action={{onClick:onUpdateSubredditNames, icon: "add"}} onChange={(e) => {
+                setSubreddit(e.target.value);
+              }}>
+            </Input>
 
-        <form onSubmit={onUpdateSubredditNames}>
-          <label>
-            Enter subreddits:
-            <input
-              type="text"
-              id="subredditInput"
-              value={subreddit}
-              onChange={(e) => setSubreddit(e.target.value)}
-            />
-          </label>
-          <input type="submit" id="subredditSubmit" />
-        </form>
-
-        <form onSubmit={handleGenerate}>
+        </Grid.Column>
+        </Grid.Row>
+    
+        
+        <Grid.Row>
+        <Grid.Column stretched>
           {trendsMenu}
+        </Grid.Column>
+        <Grid.Column stretched>
           {subredditMenu}
-          <input type="submit" value="Generate" />
-        </form>
-        <div>
-          {
+        </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+          <Button type='submit' onClick={handleGenerate}>Generate</Button>
+          </Grid.Row>
+        <Grid.Row>
+        <Button type='submit' onClick={handleReset}>Reset All</Button>
+        </Grid.Row>
+        
+    
+        <Grid.Row>
+          <Card fluid>
+            <Card.Content>
+              <Card.Header content="Trend Over Subreddits" textAlign="center"></Card.Header>
+              {
             OneTrendOverAllSubredditGraphs[
               trendsDropdown.indexOf(selectedTrendKeyword)
             ]
           }
-        </div>
-        <div>
-          {SingleTrendOverSingleSubredditGraphs[
+            </Card.Content>
+          </Card>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Card fluid>
+            <Card.Content>
+              <Card.Header content="Single Trend Over" textAlign="center"></Card.Header>
+              {SingleTrendOverSingleSubredditGraphs[
             trendsDropdown.indexOf(selectedTrendKeyword)
           ]
             ? SingleTrendOverSingleSubredditGraphs[
@@ -372,20 +385,32 @@ function Trends() {
             : SingleTrendOverSingleSubredditGraphs[
                 trendsDropdown.indexOf(selectedTrendKeyword)
               ]}
-        </div>
+            </Card.Content>
+          </Card>
+        </Grid.Row>
 
-        <div>
-          {
+        <Grid.Row>
+          <Card fluid>
+            <Card.Content>
+              <Card.Header content="All Trends Over Subreddit" textAlign="center"></Card.Header>
+              {
             AllTrendsOverOneSubredditGraphs[
               subredditDropdown.indexOf(selectedSubredditKeyword)
             ]
           }
-        </div>
+            </Card.Content>
+          </Card>
+        </Grid.Row>
+          
+          
 
-        <form onSubmit={handleReset}>
-          <input type="submit" value="Reset All" />
-        </form>
-      </div>
+    
+          
+
+        
+
+      </Grid>
+      </Container>
     </>
   );
 }
