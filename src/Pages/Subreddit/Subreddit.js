@@ -17,25 +17,41 @@ function Subreddit() {
   let postTimeData = [];
   const dispatch = useDispatch();
   const [subreddit, setSubreddit] = useState("");
+  const [sortValue, setSortValue] = useState("Hot");
+  const [topValue, setTopValue] = useState("");
   const [isTop, setIsTop] = useState(false);
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const [loaderActive, setLoader] = useState(false);
+  const subredditParams = {subreddit: subreddit, sort: sortValue, top: topValue}
 
   const subredditD = useSelector((state) => state.subreddit);
 
-  const handleDropdown = (e, result) => {
+  const handleSortDropdown = (e, result) => {
     if (result.value === "Top" ) {
       setIsTop(true);
+      setTopValue("Month")
     }
-    else {setIsTop(false)}
+    else {
+      setIsTop(false)
+      setTopValue("")
+    }
+    setSortValue(result.value)
+  }
+
+  const handleTopDropdown = (e, result) => {
+    setTopValue(result.value)
+  }
+
+  const handleInput = (e, result) => {
+    setSubreddit(result.value)
   }
 
   const handleClick = async (event) => {
     event.preventDefault();
     setButtonIsDisabled(true) 
     setLoader(true)
-    dispatch(getSubredditCommentData());
-    dispatch(getSubredditPostData());
+    dispatch(getSubredditCommentData(subredditParams));
+    dispatch(getSubredditPostData(subredditParams));
   };
 
   let loader = <Loader active={loaderActive} size="big"/>
@@ -90,31 +106,24 @@ function Subreddit() {
       <Grid textAlign="center" columns={3} divided padded='vertically'>
         <Grid.Row>
           <Grid.Column stretched>
-            <Input type='text' placeholder='Subreddit Name' action>
+            <Input type='text' placeholder='Subreddit Name' disabled={buttonIsDisabled && (loader != null)} onChange={handleInput} action>
             </Input>
           </Grid.Column>
           <Grid.Column stretched>
-            <Select options={sortOptions} defaultValue='Hot' onChange={handleDropdown}/>
+            <Select options={sortOptions} defaultValue='Hot' disabled={buttonIsDisabled && (loader != null)} onChange={handleSortDropdown}/>
           </Grid.Column>
           <Grid.Column stretched>
-            <Select options={topOptions} disabled={!isTop} defaultValue='Month'/>
+            <Select options={topOptions} disabled={(buttonIsDisabled && (loader != null)) || !isTop} defaultValue='Month' onChange={handleTopDropdown}/>
           </Grid.Column>
         </Grid.Row>
-        {loader != null &&
-        <>
         <Grid.Row>
-          <Button type='submit' disabled={buttonIsDisabled} onClick={handleClick} >Generate Analyses</Button>
+          <Button type='submit' disabled={buttonIsDisabled && (loader != null)} onClick={handleClick} >Generate Analyses</Button>
         </Grid.Row>
         <Grid.Row>
           {loader}
         </Grid.Row>
-        </>
-        }
         {loader === null &&
         <>
-        <Grid.Row>
-          <Button type='submit' onClick={handleClick} >Generate Analyses</Button>
-        </Grid.Row>
         <Grid.Row>
             <Card fluid>
               <Card.Content>
