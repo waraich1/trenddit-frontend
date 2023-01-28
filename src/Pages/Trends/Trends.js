@@ -40,7 +40,7 @@ function Trends() {
         
     }
     setTrendKeyword("");
-  };
+}
   const onUpdateSubredditNames = async (event) => {
     event.preventDefault();
     if (!subredditDropdown.includes(subreddit)){
@@ -52,7 +52,7 @@ function Trends() {
     
     }
     setSubreddit("");
-  };
+}
 
   const handleGenerate = async (event) => {
     event.preventDefault();
@@ -61,9 +61,16 @@ function Trends() {
     } else {
     // Get Trends Data based on all items of subredditDropdown x trendsDropdown but display only selectedTrendsKeyword
     dispatch(getTrendsData({trendsParams: trendsDropdown, subredditParams: subredditDropdown}));
+    let subredditInput= document.getElementById("subredditInput")
+    let trendInput= document.getElementById("trendsInput")
+    let subredditSubmit= document.getElementById("subredditSubmit")
+    let trendsSubmit= document.getElementById("trendsSubmit")
+    subredditInput.disabled = true
+    trendInput.disabled = true
+    subredditSubmit.disabled = true
+    trendsSubmit.disabled = true
 
     }
-    
     
   };
 
@@ -74,11 +81,14 @@ function Trends() {
     setSubreddit("")
     setTrendWords([])
     setSubredditNames([])
+    OneTrendOverAllSubredditGraphs = [null];
+    AllTrendsOverOneSubredditGraphs = [null];
+    SingleTrendOverSingleSubredditGraphs = [[],[]];
     
   }
   let OneTrendOverAllSubredditGraphs = [null];
   let AllTrendsOverOneSubredditGraphs = [null];
-  let SingleTrendOverSingleSubredditGraphs = [[],[]];
+  let SingleTrendOverSingleSubredditGraphs = [[null], [null], [null], [null], [null]];
 
   if (trends.status === "loading") {
     console.log("This is loading");
@@ -139,7 +149,7 @@ function Trends() {
           }
         }
         if (graphData.length === 0){
-          SingleTrendOverSingleSubredditGraphs[i][j] = <p>No data found</p>
+          SingleTrendOverSingleSubredditGraphs[i] = <p>No data found</p>
           continue;
         }
         // sort data by date
@@ -259,7 +269,7 @@ function Trends() {
 
   if (trends.status === "failed") {
     OneTrendOverAllSubredditGraphs[0] = <p>This Failed</p>;
-    SingleTrendOverSingleSubredditGraphs[0][0] =  <p>This Failed</p>;
+    SingleTrendOverSingleSubredditGraphs[0] =  <p>This Failed</p>;
     AllTrendsOverOneSubredditGraphs[0] = <p>This Failed</p>;
     
   }
@@ -278,13 +288,14 @@ function Trends() {
             Enter trends:
             <input
               type="text"
+              id="trendsInput"
               value={trendKeyword}
               onChange={(e) => {
                 setTrendKeyword(e.target.value);
               }}
             />
           </label>
-          <input type="submit" />
+          <input type="submit" id="trendsSubmit" />
         </form>
 
         <form onSubmit={onUpdateSubredditNames}>
@@ -292,11 +303,12 @@ function Trends() {
             Enter subreddits:
             <input
               type="text"
+              id="subredditInput"
               value={subreddit}
               onChange={(e) => setSubreddit(e.target.value)}
             />
           </label>
-          <input type="submit" />
+          <input type="submit" id="subredditSubmit" />
         </form>
 
          
