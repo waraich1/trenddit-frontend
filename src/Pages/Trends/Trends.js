@@ -27,21 +27,27 @@ function Trends() {
   const selectedSubredditKeyword = useSelector((state) => state.trends.selectedSubredditDropdown);
   const onUpdateTrendWords = async (event) => {
     event.preventDefault();
-    dispatch(addTrendDropdown(trendKeyword))
-    const new_set = new Set(trendWords);
-    new_set.add(trendKeyword);
-    const new_arr = Array.from(new_set);
-    
-    setTrendWords(new_arr);
+    if (!trendsDropdown.includes(trendKeyword)){
+        dispatch(addTrendDropdown(trendKeyword))
+        const new_set = new Set(trendWords);
+        new_set.add(trendKeyword);
+        const new_arr = Array.from(new_set);
+        
+        setTrendWords(new_arr);
+        
+    }
     setTrendKeyword("");
   };
   const onUpdateSubredditNames = async (event) => {
     event.preventDefault();
+    if (!subredditDropdown.includes(subreddit)){
     dispatch(addSubredditDropdown(subreddit))
     const new_set = new Set(subredditNames);
     new_set.add(subreddit);
     const new_arr = Array.from(new_set);
     setSubredditNames(new_arr);
+    
+    }
     setSubreddit("");
   };
 
