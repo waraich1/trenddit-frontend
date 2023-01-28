@@ -1,4 +1,4 @@
-import { Dropdown } from "semantic-ui-react";
+import { Select } from "semantic-ui-react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedTrendDropdown, setSelectedSubredditDropdown } from "../../Pages/Trends/TrendsSlice.js";
@@ -21,12 +21,12 @@ function DropDownMenu(input, title) {
         dispatch(setSelectedSubredditDropdown(value))
         
     }
+    setCurrentValue(value)
   };
   input.map((item) => options.push({ key: item, value: item, text: item }));
   return (
-    <Dropdown
-      placeholder={placeholderValue}
-      selection
+    <Select
+      placeholder={title}
       options={options}
       value={currentValue}
       onChange={handleChange}
