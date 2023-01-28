@@ -88,6 +88,10 @@ function Trends() {
           graphData.push(value.date);
         }
       }
+      if (graphData.length === 0){
+        OneTrendOverAllSubredditGraphs[i] = <p>No data found</p>
+        continue;
+      }
       // sort data by date
       graphData.sort(function (a, b) {
         a = a.split("/");
@@ -107,6 +111,7 @@ function Trends() {
           freq: value,
         });
       }
+      console.log(finalData)
       // Create a graph for each trend word
       OneTrendOverAllSubredditGraphs[i] = <FrequencyOfTrendInAllSubredditsLineGraph data={finalData} word={trendsDropdown[i]} />;
     }
@@ -120,6 +125,10 @@ function Trends() {
         if (value.subreddit === subredditDropdown[i]) {
           graphData.push({date:value.date, trend: value.query});
         }
+      }
+      if (graphData.length === 0){
+        AllTrendsOverOneSubredditGraphs[i] = <p>No data found</p>
+        continue;
       }
 
       // sort data by date
@@ -139,6 +148,8 @@ function Trends() {
             }
         }
     }
+    
+
       for (let i = 0; i < trendsDropdown.length; i++){
         for (const data of graphData) {
             if (data.trend === trendsDropdown[i]){
@@ -146,7 +157,6 @@ function Trends() {
             }
         }
     }
-
     
       for (let i = 0; i < trendsDropdown.length; i++){
         for (const data of graphData) {
@@ -160,6 +170,13 @@ function Trends() {
                 
             }
         }
+      }
+
+      if (freqData.size === 0 || !freqData.size){
+        console.log(freqData)
+        console.log(freqData.size)
+        AllTrendsOverOneSubredditGraphs[i] = <p>Invalid trend entered</p>
+        continue;
       }
       for (var trend of trendsDropdown){
         freqData[trend] = freqData[trend].filter((value, index, self) =>
@@ -185,7 +202,7 @@ function Trends() {
         return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
       });
       
-      
+      console.log(finalData)
       AllTrendsOverOneSubredditGraphs[i] = <FrequencyOfAllTrendsInSingleSubredditsLineGraph data={finalData} subreddit={subredditDropdown[i]}/>
 
     }
