@@ -161,7 +161,7 @@ function User() {
       <Grid textAlign="center" columns={3} divided padded='vertically'>
         <Grid.Row>
           <Grid.Column stretched>
-            <Input type='text' placeholder='User Name' disabled={buttonIsDisabled && (loader != null)} onChange={handleInput} action>
+            <Input type='text' placeholder='User Name' disabled={buttonIsDisabled && (loader != null)} onChange={handleInput}>
             </Input>
           </Grid.Column>
         </Grid.Row>
