@@ -60,7 +60,7 @@ function Trends() {
         console.log("Enter a correct number of subreddits and trends")
     } else {
     // Get Trends Data based on all items of subredditDropdown x trendsDropdown but display only selectedTrendsKeyword
-    dispatch(getTrendsData());
+    dispatch(getTrendsData({trendsParams: trendsDropdown, subredditParams: subredditDropdown}));
 
     }
     

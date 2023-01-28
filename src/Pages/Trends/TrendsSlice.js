@@ -1,23 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import qs from 'qs'
-import { useSelector } from "react-redux";
 
 
-export const getTrendsData = createAsyncThunk(
+export const getTrendsData =  createAsyncThunk(
   "asyncRedux/trendsData",
-  async () => {
-    // const trendsDropdown = useSelector((state) => state.trends.trendDropdown);
-    // const subredditDropdown = useSelector((state) => state.trends.subredditDropdown);
-    // console.log(trendsDropdown)
-    // console.log(subredditDropdown)
-    const result = await axios.get("http://127.0.0.1:500/trend_posts"
-    // , {
-    //     params: {trends: trendsDropdown, subreddits:subredditDropdown},
-    //     paramsSerializer: function(params) {
-    //         return qs.stringify(params, {arrayFormat: 'repeat'})
-    //       }}
-          );
+  async (params) => {
+    const trends = params.trendsParams.toString()
+    const subreddits = params.subredditParams.toString()
+    console.log(trends)
+    console.log(subreddits)
+    const result = await axios.get("http://127.0.0.1:500/trend_posts", {params:{
+        trend:trends,
+        subreddit:subreddits
+    }});
     return result.data.data;
   }
 );
