@@ -15,6 +15,7 @@ function Subreddit() {
   let postFreqData = [];
   let postScoreData = [];
   let postTimeData = [];
+  let subredditName = ""
   const dispatch = useDispatch();
   const [subreddit, setSubreddit] = useState("");
   const [sortValue, setSortValue] = useState("Hot");
@@ -71,9 +72,10 @@ function Subreddit() {
   }
   if (subredditD.data.CommentData.status === "succeeded" && 
     subredditD.data.PostData.status === "succeeded") {
+
     const commentData = subredditD.data.CommentData.data;
     const PostData = subredditD.data.PostData.data;
-      
+    subredditName = commentData.name
     commFreqData = formatData(commentData.author, "author", "comments")
     commScoreData = formatData(commentData.author_by_score, "author", "score")
     postFreqData = formatData(PostData.auth_freq, "author", "posts")
@@ -124,6 +126,11 @@ function Subreddit() {
         </Grid.Row>
         {loader === null &&
         <>
+        <Grid.Row>
+            <Card fluid>
+              <Card.Content textAlign="center"><h1>r/{subredditName}</h1></Card.Content>
+            </Card>
+        </Grid.Row>
         <Grid.Row>
             <Card fluid>
               <Card.Content>
