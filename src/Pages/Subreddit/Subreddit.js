@@ -106,31 +106,24 @@ function Subreddit() {
       <Grid textAlign="center" columns={3} divided padded='vertically'>
         <Grid.Row>
           <Grid.Column stretched>
-            <Input type='text' placeholder='Subreddit Name' onChange={handleInput} action>
+            <Input type='text' placeholder='Subreddit Name' disabled={buttonIsDisabled && (loader != null)} onChange={handleInput} action>
             </Input>
           </Grid.Column>
           <Grid.Column stretched>
-            <Select options={sortOptions} defaultValue='Hot' onChange={handleSortDropdown}/>
+            <Select options={sortOptions} defaultValue='Hot' disabled={buttonIsDisabled && (loader != null)} onChange={handleSortDropdown}/>
           </Grid.Column>
           <Grid.Column stretched>
-            <Select options={topOptions} disabled={!isTop} defaultValue='Month' onChange={handleTopDropdown}/>
+            <Select options={topOptions} disabled={(buttonIsDisabled && (loader != null)) || !isTop} defaultValue='Month' onChange={handleTopDropdown}/>
           </Grid.Column>
         </Grid.Row>
-        {loader != null &&
-        <>
         <Grid.Row>
-          <Button type='submit' disabled={buttonIsDisabled} onClick={handleClick} >Generate Analyses</Button>
+          <Button type='submit' disabled={buttonIsDisabled && (loader != null)} onClick={handleClick} >Generate Analyses</Button>
         </Grid.Row>
         <Grid.Row>
           {loader}
         </Grid.Row>
-        </>
-        }
         {loader === null &&
         <>
-        <Grid.Row>
-          <Button type='submit' onClick={handleClick} >Generate Analyses</Button>
-        </Grid.Row>
         <Grid.Row>
             <Card fluid>
               <Card.Content>
