@@ -36,7 +36,7 @@ const SubredditLineGraph = (props) => (
         <Label angle={270} value={props.yLabel} />
       </YAxis>
 
-      <Line dataKey={props.dataKey} fill="#8884d8" type={'natural'}>
+      <Line dataKey={props.dataKey} fill="#8884d8" type={'natural'} dot={false}>
         <LabelList dataKey="label" position="bottom" angle="0" offset={10} fill="black" />
       </Line>
     </LineChart>
