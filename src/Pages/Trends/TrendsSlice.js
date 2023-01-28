@@ -1,11 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-export const getTrendsData = createAsyncThunk(
+var qs = require('qs');
+export const getTrendsData = (trendsParam, subredditsParam) => createAsyncThunk(
   "asyncRedux/trendsData",
   async () => {
-    const result = await axios.get("http://127.0.0.1:500/trend_posts");
-    // console.log("this is res");
-    // console.log(result.data.data);
+    console.log(trendsParam)
+    console.log(subredditsParam)
+    // var trendTuple = Tuple.from(trendsParam)
+    // var subredditTuple = Tuple.from(subredditsParam)
+    const result = await axios.get("http://127.0.0.1:500/trend_posts", {
+        params: {trends: trendsParam, subreddits:subredditsParam},
+        paramsSerializer: params => {
+            return qs.stringify(params)
+          }});
     return result.data.data;
   }
 );
