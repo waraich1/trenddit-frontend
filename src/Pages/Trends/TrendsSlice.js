@@ -7,14 +7,17 @@ import { useSelector } from "react-redux";
 export const getTrendsData = createAsyncThunk(
   "asyncRedux/trendsData",
   async () => {
-    const trendsDropdown = useSelector((state) => state.trends.trendDropdown);
-    const subredditDropdown = useSelector((state) => state.trends.subredditDropdown);
-
-    const result = await axios.get("http://127.0.0.1:500/trend_posts", {
-        params: {trends: trendsDropdown, subreddits:subredditDropdown},
-        paramsSerializer: params => {
-            return qs.stringify(params)
-          }});
+    // const trendsDropdown = useSelector((state) => state.trends.trendDropdown);
+    // const subredditDropdown = useSelector((state) => state.trends.subredditDropdown);
+    // console.log(trendsDropdown)
+    // console.log(subredditDropdown)
+    const result = await axios.get("http://127.0.0.1:500/trend_posts"
+    // , {
+    //     params: {trends: trendsDropdown, subreddits:subredditDropdown},
+    //     paramsSerializer: function(params) {
+    //         return qs.stringify(params, {arrayFormat: 'repeat'})
+    //       }}
+          );
     return result.data.data;
   }
 );
