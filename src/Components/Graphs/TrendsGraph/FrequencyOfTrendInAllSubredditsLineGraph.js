@@ -26,7 +26,7 @@ const FrequencyOfTrendInAllSubredditsLineGraph = (props) => (
         }}
       />
       <Tooltip />
-      <Line type='natural'dataKey="freq" stroke="#8884d8">
+      <Line type='natural' connectNulls dataKey="freq" stroke="#8884d8">
       </Line>
     </LineChart>
   </ResponsiveContainer>

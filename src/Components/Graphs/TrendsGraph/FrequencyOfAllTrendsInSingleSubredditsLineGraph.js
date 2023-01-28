@@ -37,7 +37,7 @@ function FrequencyOfAllTrendsInSingleSubredditsLineGraph(props){
         console.log(`${value} has been created`)
        
 
-      return (<Line type='natural' key={value} dataKey={value} stroke={colors[index]} fill={colors[index]} activeDot={{ r: 5 }} />)
+      return (<Line connectNulls type='natural' key={value} dataKey={value} stroke={colors[index]} fill={colors[index]} activeDot={{ r: 5 }} />)
     })
   }
     </LineChart>
