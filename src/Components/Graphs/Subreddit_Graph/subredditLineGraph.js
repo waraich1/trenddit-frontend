@@ -10,19 +10,6 @@ import {
   Label
 } from "recharts";
 
-// const tooltipPayload = (data) => {
-//   const tooltipArray = []
-//   data.forEach(element => {
-//     tooltipArray.push(
-//     {hour: "Hour : " + element['hour'],
-//     frequency: element['frequency']}
-//     )
-//   });
-//   console.log(tooltipArray)
-//   return tooltipArray
-// }
-
-
 const SubredditLineGraph = (props) => (
   <ResponsiveContainer width="100%" height={500}>
     <LineChart data={props.data}>
