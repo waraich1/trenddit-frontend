@@ -11,9 +11,11 @@ import {
 } from 'recharts';
 
 
-const TrendsLineGraph = (props) => (
+
+const FrequencyOfTrendInAllSubredditsLineGraph = (props) => (
     <ResponsiveContainer width="80%" height={600}>
     <LineChart data={props.data}>
+    <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date"
       />
       <YAxis
@@ -30,4 +32,4 @@ const TrendsLineGraph = (props) => (
   </ResponsiveContainer>
 );
 
-export default TrendsLineGraph;
+export default FrequencyOfTrendInAllSubredditsLineGraph;
