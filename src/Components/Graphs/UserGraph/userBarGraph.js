@@ -1,34 +1,36 @@
 import React from 'react'
 import {
   ResponsiveContainer,
-  LineChart,
+  BarChart,
   Tooltip,
   XAxis,
   YAxis,
-  Line,
+  Bar,
   LabelList,
   Label
 } from "recharts";
 
-const SubredditLineGraph = (props) => (
+
+const UserBarGraph = (props) => (
   <ResponsiveContainer width="100%" height={500}>
-    <LineChart data={props.data}>
+    <BarChart data={props.data}>
       <XAxis
       height={50}
-      dataKey="hour"
-        tick={true}
-        label={{ value: "UTC Time (Hours)", position: "insideBottom", offset: "0" }}
+      dataKey="subreddit"
+        tick={false}
+        label={{ value: "Subreddit", position: "insideBottom", offset: "0" }}
       />
       <YAxis width={100}>
         <Label angle={270} value={props.yLabel} />
       </YAxis>
 
-      <Line connectNulls dataKey={props.dataKey} fill="#8884d8" type={'natural'} dot={false}>
+      <Tooltip />
+      <Bar dataKey={props.dataKey} fill="#8884d8">
         <LabelList dataKey="label" position="bottom" angle="0" offset={10} fill="black" />
-      </Line>
-    </LineChart>
+      </Bar>
+    </BarChart>
   </ResponsiveContainer>
 );
 
 
-export {SubredditLineGraph};
+export {UserBarGraph};
