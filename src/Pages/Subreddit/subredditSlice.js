@@ -2,18 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 export const getSubredditCommentData = createAsyncThunk(
   "asyncRedux/subredditCommentData",
-  async () => {
-    const result = await axios.get("http://127.0.0.1:500/subreddit_comments");
+  async (params) => {
+    const result = await axios.get("http://127.0.0.1:500/subreddit_comments", params=params);
+    console.log(params)
     return result.data.data;
   }
 );
 
 export const getSubredditPostData = createAsyncThunk(
   "asyncRedux/subredditPostData",
-  async () => {
-    const result = await axios.get("http://127.0.0.1:500/subreddit_posts");
-    // console.log("this is res");
-    // console.log(result.data.data);
+  async (params) => {
+    const result = await axios.get("http://127.0.0.1:500/subreddit_posts", params=params);
+    console.log(params)
     return result.data.data;
   }
 );
