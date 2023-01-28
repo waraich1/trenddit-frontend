@@ -4,8 +4,6 @@ export const getSubredditCommentData = createAsyncThunk(
   "asyncRedux/subredditCommentData",
   async () => {
     const result = await axios.get("http://127.0.0.1:500/subreddit_comments");
-    // console.log("this is res");
-    // console.log(result.data.data);
     return result.data.data;
   }
 );
