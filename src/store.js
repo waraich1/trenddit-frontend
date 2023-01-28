@@ -4,6 +4,6 @@ import trendReducer from "./Pages/Trends/TrendsSlice";
 export default configureStore({
   reducer: {
     subreddit: subredditReducer,
-    trends: trendReducer
+    trends: trendReducer,
   },
 });
