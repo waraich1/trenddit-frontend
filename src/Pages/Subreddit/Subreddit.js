@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubredditCommentData, getSubredditPostData } from "./subredditSlice";
 import {SubredditBarGraph} from "../../Components/Graphs/Subreddit_Graph/subredditBarGraph";
+import { SubredditLineGraph } from "../../Components/Graphs/Subreddit_Graph/subredditLineGraph";
 import {SimpleWordcloud} from "../../Components/Graphs/Subreddit_Graph/subredditWordCloud";
 import { Container, Button, Select, Input, Grid, Card, Dimmer, Loader } from 'semantic-ui-react'
 import { formatData } from "../../Components/subredditComponents/formatObjects";
@@ -13,6 +14,7 @@ function Subreddit() {
   let commWordTrendData = [];
   let postFreqData = [];
   let postScoreData = [];
+  let postTimeData = [];
   const dispatch = useDispatch();
   const [subreddit, setSubreddit] = useState("");
   const [isTop, setIsTop] = useState(false);
@@ -44,6 +46,7 @@ function Subreddit() {
   let commWordCloud = <Loader active={loaderActive}/>;
   let postFreqGraph = <Loader active={loaderActive}/>;
   let postScoreGraph = <Loader active={loaderActive}/>;
+  let postTimeGraph = <Loader active={loaderActive}/>;
 
   // Check subreddit data status 
   if (subredditD.data.CommentData.status === "loading" ||
@@ -55,26 +58,29 @@ function Subreddit() {
     const commentData = subredditD.data.CommentData.data;
     const PostData = subredditD.data.PostData.data;
       
-    commFreqData = formatData(commentData.author_by_comments, "author", "comments")
+    commFreqData = formatData(commentData.author, "author", "comments")
     commScoreData = formatData(commentData.author_by_score, "author", "score")
     postFreqData = formatData(PostData.auth_freq, "author", "posts")
     postScoreData = formatData(PostData.author_score, "author", "score")
     commWordTrendData = formatData(commentData.text, "text", "value")
+    postTimeData = formatData(PostData.hour_counter, "hour", "frequency")
 
     commFreqGraph = <SubredditBarGraph data={commFreqData} yLabel={"Number of Comments"} dataKey="comments"/>;
     commScoreGraph = <SubredditBarGraph data={commScoreData} yLabel={"Total comment score"} dataKey="score"/>;
     commWordCloud = <SimpleWordcloud words={commWordTrendData}/>;
     postFreqGraph = <SubredditBarGraph data={postFreqData} yLabel={"Number of Posts"} dataKey="posts"/>;
     postScoreGraph = <SubredditBarGraph data={postScoreData} yLabel={"Total post score"} dataKey="score"/>;
+    postTimeGraph = <SubredditLineGraph data={postTimeData} yLabel={"Number of posts"} dataKey="frequency"/>;
     loader = null;
   }
   if (subredditD.data.CommentData.status === "failed" ||
     subredditD.data.PostData.status === "failed") {
-      commFreqGraph = <p>This Failed</p>;
+    commFreqGraph = <p>This Failed</p>;
     commScoreGraph = <p>This Failed</p>;
     commWordCloud = <p>This Failed</p>;
     postFreqGraph = <p>This Failed</p>;
     postScoreGraph = <p>This Failed</p>;
+    postTimeGraph = <p>This Failed</p>
     loader = null;
   }
 
@@ -146,6 +152,14 @@ function Subreddit() {
             <Card.Content>
               <Card.Header content="Post Score By Author" textAlign="center"></Card.Header>
               {postScoreGraph}
+            </Card.Content>
+          </Card>
+        </Grid.Row>
+        <Grid.Row>
+          <Card fluid>
+            <Card.Content>
+              <Card.Header content="Post Frequency by Hour" textAlign="center"></Card.Header>
+              {postTimeGraph}
             </Card.Content>
           </Card>
         </Grid.Row>
