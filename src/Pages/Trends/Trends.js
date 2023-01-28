@@ -3,16 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { 
     getTrendsData, 
     addSubredditDropdown, 
-    addTrendDropdown 
+    addTrendDropdown ,
+    resetEverything
 } from "./TrendsSlice";
 import FrequencyOfTrendInAllSubredditsLineGraph from "../../Components/Graphs/TrendsGraph/FrequencyOfTrendInAllSubredditsLineGraph";
 import FrequencyOfAllTrendsInSingleSubredditsLineGraph from "../../Components/Graphs/TrendsGraph/FrequencyOfAllTrendsInSingleSubredditsLineGraph";
 import DropDownMenu from "../../Components/DropdownMenu/DropdownMenu";
 
 function Trends() {
-  const dataSubreddit = [];
-  const currentlySelectedTrend = "";
-  const dataTrend = [];
   const [trendWords, setTrendWords] = useState([]);
   const [subredditNames, setSubredditNames] = useState([]);
   const dispatch = useDispatch();
@@ -62,6 +60,15 @@ function Trends() {
     event.preventDefault();
     dispatch(getTrendsData());
   };
+  const handleReset = async (event) => {
+    event.preventDefault();
+    dispatch(resetEverything())
+    setTrendKeyword("")
+    setSubreddit("")
+    setTrendWords([])
+    setSubredditNames([])
+    
+  }
   let OneTrendOverAllSubredditGraphs = [null];
   let AllTrendsOverOneSubredditGraphs = [null];
 
@@ -72,12 +79,7 @@ function Trends() {
   if (trends.status === "succeeded") {
     console.log("This succeeded");
     const data = trends.data;
-    for (var [key, value] of Object.entries(data.data)) {
-      dataTrend.push({
-        query: value.query,
-        date: value.date,
-      });
-    }
+    
     // Formatting / Feeding of data to OneTrendOverAllSubredditGraphs
     for (let i = 0; i < trendsDropdown.length; i++) {
 
@@ -172,9 +174,7 @@ function Trends() {
         }
       }
 
-      if (freqData.size === 0 || !freqData.size){
-        console.log(freqData)
-        console.log(freqData.size)
+      if (Object.keys(freqData).length === 0){
         AllTrendsOverOneSubredditGraphs[i] = <p>Invalid trend entered</p>
         continue;
       }
@@ -221,10 +221,9 @@ function Trends() {
     <>
       <div>
         
-
         <form onSubmit={onUpdateTrendWords}>
           <label>
-            Enter trend name:
+            Enter trends:
             <input
               type="text"
               value={trendKeyword}
@@ -238,7 +237,7 @@ function Trends() {
 
         <form onSubmit={onUpdateSubredditNames}>
           <label>
-            Enter subreddit name:
+            Enter subreddits:
             <input
               type="text"
               value={subreddit}
@@ -248,6 +247,7 @@ function Trends() {
           <input type="submit" />
         </form>
 
+        <div><h2>Frequency of Trend in All Subreddits:</h2></div>      
           <form onSubmit={handleClickForTrends}>
             {trendsMenu}
             <input type="submit" value="Generate" />
@@ -255,12 +255,16 @@ function Trends() {
           
         <div>{OneTrendOverAllSubredditGraphs[trendsDropdown.indexOf(selectedTrendKeyword)]}</div>
 
-
+    <div><h2>Frequency of All Trends in Selected Subreddit:</h2></div>
       <form onSubmit={handleClickForSubreddits}>
             {subredditMenu}
             <input type="submit" value="Generate" />
           </form>
     <div>{AllTrendsOverOneSubredditGraphs[subredditDropdown.indexOf(selectedSubredditKeyword)]}</div>
+
+    <form onSubmit={handleReset}>
+            <input type="submit" value="Reset All" />
+          </form>
     </div>
     </>
   );

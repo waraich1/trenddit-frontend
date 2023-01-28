@@ -33,7 +33,14 @@ const trendsSlice = createSlice({
                 }
         },
         setSelectedTrendDropdown: (state, action) => {state.selectedTrendDropdown = action.payload},
-        setSelectedSubredditDropdown: (state, action) => {state.selectedSubredditDropdown = action.payload}
+        setSelectedSubredditDropdown: (state, action) => {state.selectedSubredditDropdown = action.payload},
+        resetEverything: (state, action) => {
+            state.trendDropdown = []
+            state.subredditDropdown = []
+            state.selectedTrendDropdown = null
+            state.selectedSubredditDropdown = null
+            state.data = {}
+        }
 
     },
     extraReducers(builder) {
@@ -58,4 +65,4 @@ const trendsSlice = createSlice({
   
   export default trendsSlice.reducer;
 
-  export const {addTrendDropdown, addSubredditDropdown, setSelectedTrendDropdown, setSelectedSubredditDropdown} = trendsSlice.actions;
+  export const {addTrendDropdown, addSubredditDropdown, setSelectedTrendDropdown, setSelectedSubredditDropdown, resetEverything} = trendsSlice.actions;
