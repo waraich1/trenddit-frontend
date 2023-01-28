@@ -23,8 +23,9 @@ const formatData = (data, dataKey, dataValue) => {
         }
         result.push(obj)
     }
-    result.sort((a,b) => {
-        return b[dataValue] - a[dataValue]})
+    if (dataKey !== 'hour'){
+        result.sort((a,b) => {
+            return b[dataValue] - a[dataValue]})}
     return result
 }
 
