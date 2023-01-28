@@ -53,12 +53,12 @@ function Trends() {
     
     event.preventDefault();
     // Get Trends Data based on all items of subredditDropdown x trendsDropdown but display only selectedTrendsKeyword
-    dispatch(getTrendsData(trendsDropdown,subredditDropdown));
+    dispatch(getTrendsData());
   };
 
   const handleClickForSubreddits = async (event) => {
     event.preventDefault();
-    dispatch(getTrendsData(trendsDropdown,subredditDropdown));
+    dispatch(getTrendsData());
   };
   const handleReset = async (event) => {
     event.preventDefault();
