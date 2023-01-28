@@ -3,7 +3,9 @@ import axios from "axios";
 export const getUserData = createAsyncThunk(
   "asyncRedux/userData",
   async (params) => {
-    const result = await axios.get("http://127.0.0.1:500/author_details", params=params);
+    const result = await axios.get("http://127.0.0.1:500/author_details", {
+      params: params,
+    });
     console.log(params)
     return result.data.data;
   }
