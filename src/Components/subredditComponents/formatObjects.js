@@ -23,10 +23,20 @@ const formatData = (data, dataKey, dataValue) => {
         }
         result.push(obj)
     }
-    if (dataKey !== 'hour'){
+    if (dataKey !== 'hour' && dataKey !== 'text'){
         result.sort((a,b) => {
-            return b[dataValue] - a[dataValue]})}
-    return result
+            return b[dataValue] - a[dataValue]})
+        while (result.length < 15) {
+            var emptyObj = {}
+            emptyObj[dataKey] = ""
+            emptyObj[dataValue] = 0
+            emptyObj['label'] = "" 
+            result.push(emptyObj)
+        }
+        return result.slice(0,15)
+    }
+    else { return result }
+
 }
 
 export {formatData}
