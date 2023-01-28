@@ -3,8 +3,10 @@ import axios from "axios";
 export const getSubredditCommentData = createAsyncThunk(
   "asyncRedux/subredditCommentData",
   async (params) => {
-    const result = await axios.get("http://127.0.0.1:500/subreddit_comments", params=params);
-    console.log(params)
+    const result = await axios.get("http://127.0.0.1:500/subreddit_comments", {
+      params: params,
+    });
+    console.log(params);
     return result.data.data;
   }
 );
@@ -12,8 +14,10 @@ export const getSubredditCommentData = createAsyncThunk(
 export const getSubredditPostData = createAsyncThunk(
   "asyncRedux/subredditPostData",
   async (params) => {
-    const result = await axios.get("http://127.0.0.1:500/subreddit_posts", params=params);
-    console.log(params)
+    const result = await axios.get("http://127.0.0.1:500/subreddit_posts", {
+      params: params,
+    });
+    console.log(params);
     return result.data.data;
   }
 );
