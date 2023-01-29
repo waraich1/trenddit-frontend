@@ -16,7 +16,7 @@ function User() {
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const [loaderActive, setLoader] = useState(false);
   const userParams = {user: user}
-
+  let failed = false
   const userD = useSelector((state) => state.user);
 
   const handleInput = (e, result) => {
@@ -33,10 +33,10 @@ function User() {
   let loader = <Loader active={loaderActive} size="big"/>
 
   // Initialize graphs
-  let topCommGraph = <Loader active={loaderActive}/>
-  let topCommScoreGraph = <Loader active={loaderActive}/>;
-  let topPostGraph = <Loader active={loaderActive}/>;
-  let topPostScoreGraph = <Loader active={loaderActive}/>;
+  let topCommGraph = null
+  let topCommScoreGraph = null
+  let topPostGraph = null
+  let topPostScoreGraph = null
   let userInfo = null;
   let commStat = null;
   let postStat = null;
@@ -66,7 +66,6 @@ function User() {
     const totalKarma = userData.total_karma
     const totalComments = userData.total_comments
     const totalPosts = userData.total_posts
-    console.log(userData.cake_day)
     const cakeDay = (new Date(userData.cake_day * 1000)).toLocaleDateString()
     const commKarma = userData.comment_karma 
     const avrgCommKarma = userData.average_karma_comment.toFixed(2)
@@ -96,29 +95,29 @@ function User() {
     ]
 
     const lowestCommInfoItems = [
-        {key: "commSubreddit", label: "Subreddit", value: lowestComment.subreddit},
+        {key: "commSubreddit", label: "Subreddit", value: "r/" + lowestComment.subreddit},
         {key: "commScore", label: "Comment Score", value: lowestComment.score},
         {key: "commBody", label: "Lowest Comment", value: lowestComment.body},
     ]
 
     const highestCommInfoItems = [
-        {key: "commSubreddit", label: "Subreddit", value: highestComment.subreddit},
+        {key: "commSubreddit", label: "Subreddit", value: "r/" + highestComment.subreddit},
         {key: "commScore", label: "Comment Score", value: highestComment.score},
         {key: "commBody", label: "Highest Comment", value: highestComment.body},
     ]
 
     const lowestPostInfoItems = [
-        {key: "postSubreddit", label: "Subreddit", value: lowestPost.subreddit},
+        {key: "postSubreddit", label: "Subreddit", value: "r/" + lowestPost.subreddit},
         {key: "postScore", label: "Comment Score", value: lowestPost.score},
         {key: "postComments", label: "Number of Comments", value: lowestPost.num_comments},
-        {key: "psotTitle", label: "Lowest Post", value: lowestPost.title},
+        {key: "psotTitle", label: "Lowest Post", value: lowestPost.title.replace(/^(\[image\])/, "")},
     ]
 
     const highestPostInfoItems = [
-        {key: "postSubreddit", label: "Subreddit", value: highestPost.subreddit},
+        {key: "postSubreddit", label: "Subreddit", value: "r/" + highestPost.subreddit},
         {key: "postScore", label: "Comment Score", value: highestPost.score},
         {key: "postComments", label: "Number of Comments", value: highestPost.num_comments},
-        {key: "postTitle", label: "Highest Post", value: highestPost.title},
+        {key: "postTitle", label: "Highest Post", value: highestPost.title.replace(/^(\[image\])/, "")},
     ]
 
     userInfo = <Statistic.Group widths={3} size="small" items={userInfoitems}></Statistic.Group>
@@ -152,7 +151,8 @@ function User() {
     topCommScoreGraph = <p>This Failed</p>;
     topPostGraph = <p>This Failed</p>;
     topPostScoreGraph = <p>This Failed</p>;
-    loader = null;
+    loader=null
+    failed = true
   }
 
   return (
@@ -160,18 +160,29 @@ function User() {
     <Container>
       <Grid textAlign="center" columns={3} divided padded='vertically'>
         <Grid.Row>
+          <h1>User Analysis</h1>
+        </Grid.Row>
+        <Grid.Row>
           <Grid.Column stretched>
             <Input type='text' placeholder='User Name' disabled={buttonIsDisabled && (loader != null)} onChange={handleInput}>
             </Input>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Button type='submit' disabled={buttonIsDisabled && (loader != null)} onClick={handleClick} >Generate Analyses</Button>
+          <Button type='submit' disabled={buttonIsDisabled && (loader != null)} onClick={handleClick} >Generate Analysis</Button>
         </Grid.Row>
+        <Grid.Row padded='vertically' stretched>
+          {buttonIsDisabled && loader}
+        </Grid.Row>
+        {failed &&
         <Grid.Row>
-          {loader}
-        </Grid.Row>
-        {loader === null &&
+          <Card fluid>
+            <Card.Content textAlign="center">
+              <h1>The user could not be found!</h1>
+            </Card.Content>
+          </Card>
+        </Grid.Row>}
+        {loader === null && !failed &&
         <>
         <Grid.Row>
             <Card fluid>

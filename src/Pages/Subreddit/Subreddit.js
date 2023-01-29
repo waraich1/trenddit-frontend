@@ -24,6 +24,7 @@ function Subreddit() {
   const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
   const [loaderActive, setLoader] = useState(false);
   const subredditParams = {subreddit: subreddit, sort: sortValue, top: topValue}
+  let failed = false
 
   const subredditD = useSelector((state) => state.subreddit);
 
@@ -58,12 +59,12 @@ function Subreddit() {
   let loader = <Loader active={loaderActive} size="big"/>
 
   // Initialize graphs
-  let commFreqGraph = <Loader active={loaderActive}/>
-  let commScoreGraph = <Loader active={loaderActive}/>;
-  let commWordCloud = <Loader active={loaderActive}/>;
-  let postFreqGraph = <Loader active={loaderActive}/>;
-  let postScoreGraph = <Loader active={loaderActive}/>;
-  let postTimeGraph = <Loader active={loaderActive}/>;
+  let commFreqGraph = null
+  let commScoreGraph = null
+  let commWordCloud = null
+  let postFreqGraph = null
+  let postScoreGraph = null
+  let postTimeGraph = null
 
   // Check subreddit data status 
   if (subredditD.data.CommentData.status === "loading" ||
@@ -100,12 +101,16 @@ function Subreddit() {
     postScoreGraph = <p>This Failed</p>;
     postTimeGraph = <p>This Failed</p>
     loader = null;
+    failed = true;
   }
 
   return (
     <>
     <Container>
       <Grid textAlign="center" columns={3} divided padded='vertically'>
+        <Grid.Row>
+          <h1>Subreddit Analysis</h1>
+        </Grid.Row>
         <Grid.Row>
           <Grid.Column stretched>
             <Input type='text' placeholder='Subreddit Name' disabled={buttonIsDisabled && (loader != null)} onChange={handleInput}>
@@ -119,12 +124,20 @@ function Subreddit() {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Button type='submit' disabled={buttonIsDisabled && (loader != null)} onClick={handleClick} >Generate Analyses</Button>
+          <Button type='submit' disabled={buttonIsDisabled && (loader != null)} onClick={handleClick} >Generate Analysis</Button>
         </Grid.Row>
         <Grid.Row>
           {loader}
         </Grid.Row>
-        {loader === null &&
+        {failed &&
+        <Grid.Row>
+          <Card fluid>
+            <Card.Content textAlign="center">
+              <h1>The subreddit could not be found!</h1>
+            </Card.Content>
+          </Card>
+        </Grid.Row>}
+        {loader === null && !failed &&
         <>
         <Grid.Row>
             <Card fluid>
