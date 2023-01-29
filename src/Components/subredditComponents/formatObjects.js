@@ -1,7 +1,7 @@
 
 const formatData = (data, dataKey, dataValue) => {
     let result = []
-    const ignoredAuthors = ['AutoModerator', '[deleted]']
+    const ignoredAuthors = ['AutoModerator', '[deleted]', 'None']
     const ignoredWords = ['t', 'moderators', 'r', 'subreddit', 'comment', 'moderation', 'bot', 'submission']
 
     const dataArr = Object.entries(data)
