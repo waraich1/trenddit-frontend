@@ -5,6 +5,11 @@ import * as IoIcons from "react-icons/io";
 import * as BsIcons from "react-icons/bs";
 import * as IoLogos from "react-icons/io";
 import * as BiLogos from "react-icons/bi";
+import { googleLogout } from '@react-oauth/google';
+
+const handleLogout = () => {
+  googleLogout();
+}
 
 export const SidebarData = [
   {
@@ -27,8 +32,9 @@ export const SidebarData = [
   },
   {
     title: "Logout",
-    path: "/logout",
+    path: "/",
     icons: <BiLogos.BiLogOut />,
     cName: "side-text",
+    onClick: handleLogout
   },
 ];
